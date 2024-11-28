@@ -31,6 +31,7 @@ export type Options<
   windowFeatures: WindowFeatures;
   authTimeoutMs: number;
   windowClosedPollMs: number;
+  returnTo: string;
 }>;
 
 const timeoutPromise = <ResolveData>(
@@ -53,6 +54,7 @@ const telegramAuth = async (botId: string, options: Options = {}) => {
     windowTarget = "_blank",
     authTimeoutMs = 120_000,
     windowClosedPollMs = 300,
+    returnTo = undefined,
   } = options;
 
   const getTgListener =
@@ -91,6 +93,7 @@ const telegramAuth = async (botId: string, options: Options = {}) => {
     request_access: requestAccess,
     origin: window.origin,
     lang: "en", // TODO: Should this be a parameter? If so, what is the proper typing?
+    return_to: returnTo ?? window.origin
   });
 
   const features = Object.entries(windowFeatures)
